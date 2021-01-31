@@ -29,8 +29,6 @@ class ReservationsController extends Controller
             'more_details' => 'Dettagli',
         ];
 
-        Str::replaceArray("to_date", ["to"], $reservations);
-
         return view('reservations.index', compact('reservations', 'columns'));
     }
 
@@ -88,9 +86,7 @@ class ReservationsController extends Controller
 
         $reservation = Reservation::find($id);
 
-        $replaced = Str::replaceArray("to_date", ["to"], $reservation);
-
-        return view('reservations.show', compact('columns', 'reservation', 'replaced'));
+        return view('reservations.show', compact('columns', 'reservation'));
 
 
     }
