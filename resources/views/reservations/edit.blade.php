@@ -2,8 +2,9 @@
 
 @section('content')
 
-<form method="PUT" action="{{ route('reservations.update', $reservation['id']) }}">
+<form method="POST" action="{{ route('reservations.update', $reservation['id']) }}">
     @CSRF
+    @method('PUT')
   <div class="form-group">
     <label for="nome">Nome</label>
     <input type="text" class="form-control" id="nome" name="guest_full_name" placeholder="Inserisci nominativo" value="{{ $reservation['guest_full_name'] }}">
