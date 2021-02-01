@@ -14,6 +14,14 @@
                 <li class={{ Route::currentRouteName() == $route['pathId'] ? 'active' : '' }}><a href="{{ route($route['pathId']) }}">{{$route['displayText']}}</a></li>
                 @endforeach
             </ul>
+            <!-- <form class="" action="{{ route('reservations.index') }}" method="GET">
+            @CSRF
+            <div class="form-group">
+                <label for="nome">Nome e cognome ospite</label>
+                <input type="text" class="form-control" id="nome" name="guest_full_name" placeholder="Inserisci nominativo">
+            </div> -->
+
+            </form>
         </header>
 
         @yield('content', 'Nessun contenuto disponibile')

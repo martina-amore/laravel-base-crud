@@ -8,6 +8,10 @@ use App\Reservation;
 
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Validator;
+
+use App\Http\Requests\ReservationFormRequest;
+
 class ReservationsController extends Controller
 {
     /**
@@ -15,8 +19,9 @@ class ReservationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $reservations = Reservation::all();
 
         $columns = [
@@ -48,16 +53,18 @@ class ReservationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReservationFormRequest $request)
     {
+        $validated = $request->validated();
+
         $newReservation = new Reservation();
 
-        $newReservation->guest_full_name = $request->input('guest_full_name');
-        $newReservation->guest_credit_card = $request->input('guest_credit_card');
-        $newReservation->room = $request->input('room');
-        $newReservation->from_date = $request->input('from_date');
-        $newReservation->to_date = $request->input('to_date');
-        $newReservation->more_details = $request->input('more_details');
+        $newReservation->guest_full_name = $validated['guest_full_name'];
+        $newReservation->guest_credit_card = $validated['guest_credit_card'];
+        $newReservation->room = $validated['room'];
+        $newReservation->from_date = $validated['from_date'];
+        $newReservation->to_date = $validated['to_date'];
+        $newReservation->more_details = $validated['more_details'];
 
         $newReservation->save();
 
@@ -99,7 +106,9 @@ class ReservationsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $reservation = Reservation::find($id);
+
+        return view('reservations.edit', compact('reservation'));
     }
 
     /**
@@ -109,9 +118,22 @@ class ReservationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReservationFormRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $oldReservation = Reservation::find($id);
+
+        $oldReservation->guest_full_name = $validated['guest_full_name'];
+        $oldReservation->guest_credit_card = $validated['guest_credit_card'];
+        $oldReservation->room = $validated['room'];
+        $oldReservation->from_date = $validated['from_date'];
+        $oldReservation->to_date = $validated['to_date'];
+        $oldReservation->more_details = $validated['more_details'];
+
+        $oldReservation->save();
+
+        return redirect()->route('reservations.index');
     }
 
     /**

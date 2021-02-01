@@ -21,6 +21,7 @@
             <td>{{ $reservation->more_details }}</td>
             <td>
                 <a href="{{ route('reservations.show', $reservation->id) }}">Scheda dettagliata</a>
+                <a href="{{ route('reservations.edit', $reservation->id) }}">Aggiorna</a>
             </td>
         </tr>
     @endforeach
